@@ -1,7 +1,7 @@
 {
-  "name": "react-template",
+  "name": "{{name}}",
   "version": "1.0.0",
-  "description": "react-template",
+  "description": "{{description}}",
   "scripts": {
     "start": "node scripts/devServer.js",
     "dev": "node scripts/devServer.js",
