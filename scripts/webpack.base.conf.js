@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -8,6 +9,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 // const HappyPackThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
@@ -105,6 +107,13 @@ module.exports = {
         path: 'apiConfig.js',
       }],
       append: false,
+    }),
+    // 使用dll文件
+    new AddAssetHtmlWebpackPlugin({
+      filepath: path.resolve(__dirname, '../dll/vendor.dll.js'), // 对应的 dll 文件路径
+    }),
+    new webpack.DllReferencePlugin({
+      manifest: path.resolve(__dirname, '..', 'dll/vendor-manifest.json'),
     }),
     // new HappyPack({
     //   // 用唯一的标识符id，来代表当前的HappyPack是用来处理一类特定的文件
