@@ -23,13 +23,22 @@ module.exports = {
     modules: [
       'node_modules',
     ],
-    extensions: ['.js', '.jsx', '.less', '.ts', 'tsx', '.json'],
+    extensions: ['.js', '.jsx', '.less', '.ts', '.tsx', '.json'],
     alias: {
       '@': path.join(__dirname, '../src/'),
     },
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        loader: "awesome-typescript-loader",
+      },
+      // {
+      //   enforce: "pre",
+      //   test: /\.js$/,
+      //   loader: "source-map-loader"
+      // },
       {
         test: /\.(js|.jsx)$/,
         loader: 'eslint-loader',
@@ -125,5 +134,7 @@ module.exports = {
   ],
   externals: {
     $config: '$config',
+    // "react": "React",
+    // "react-dom": "ReactDOM",
   },
 };
