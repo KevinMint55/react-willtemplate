@@ -26,13 +26,16 @@ module.exports = {
     extensions: ['.js', '.jsx', '.less', '.ts', '.tsx', '.json'],
     alias: {
       '@': path.join(__dirname, '../src/'),
+      Src: resolve('src'),
+      Components: resolve('src/components'),
+      Utils: resolve('src/utils'),
     },
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: "awesome-typescript-loader",
+        loader: 'awesome-typescript-loader',
       },
       // {
       //   enforce: "pre",

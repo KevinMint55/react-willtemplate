@@ -9,6 +9,10 @@ module.exports = {
   extends: ['plugin:react/recommended', 'airbnb-base'],
   settings: {
     'import/resolver': {
+      node: {
+        extensions: ['.tsx', '.ts', '.js', '.json'],
+      },
+      typescript: {},
       webpack: {
         config: path.resolve(__dirname, './scripts//webpack.base.conf.js'),
       },
