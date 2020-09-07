@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const devWebpackConfig = require('./webpack.dev.conf');
-const config = require('../config');
+const config = require('./config');
 
 const options = {
   publicPath: '/',
@@ -12,7 +12,10 @@ const options = {
   hot: true,
   inline: true,
   compress: true,
-  overlay: { warnings: false, errors: true },
+  overlay: {
+    warnings: false,
+    errors: true,
+  },
   quiet: true,
   host: '0.0.0.0',
   watchOptions: {
@@ -34,14 +37,20 @@ const getIPAddress = () => {
 };
 
 const devServer = () => {
+  const pkgConfig = require('../package.json');
   const IP = getIPAddress();
   devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
     compilationSuccessInfo: {
-      messages: [`应用程序运行地址: http://${IP}:${config.dev.port}`],
+      messages: [
+        `${pkgConfig.name} APP runing at：
+        - Network: http://${IP}:${config.dev.port}/
+        - Local:   http://localhost:${config.dev.port}/
+        `,
+      ],
     },
   }));
   WebpackDevServer.addDevServerEntrypoints(devWebpackConfig, options);
-  new WebpackDevServer(webpack(devWebpackConfig), options).listen(config.dev.port, '0.0.0.0', () => { });
+  new WebpackDevServer(webpack(devWebpackConfig), options).listen(config.dev.port, '0.0.0.0', () => {});
 };
 
 devServer();

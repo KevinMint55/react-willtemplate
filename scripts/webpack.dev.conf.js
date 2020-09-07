@@ -2,7 +2,7 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const betterProgress = require('better-webpack-progress');
 const baseWebpackConfig = require('./webpack.base.conf.js');
-const config = require('../config');
+const config = require('./config');
 
 module.exports = merge(baseWebpackConfig, {
   mode: 'development',

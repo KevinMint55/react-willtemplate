@@ -1,10 +1,8 @@
 
 import React, { useState } from 'react';
 
-interface IProps { }
-
-export default (props: IProps) => {
-  const [name] = useState('hahahaha');
+const Home = () => {
+  const [name] = useState<String>('ddd');
 
   return (
     <div className="home">
@@ -12,3 +10,5 @@ export default (props: IProps) => {
     </div>
   );
 };
+
+export default Home;

@@ -10,6 +10,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
@@ -17,7 +18,7 @@ function resolve(dir) {
 
 module.exports = {
   entry: {
-    app: './src/index.js',
+    app: ['react-hot-loader/patch', './src/index.tsx'],
   },
   resolve: {
     modules: [
@@ -25,6 +26,7 @@ module.exports = {
     ],
     extensions: ['.js', '.jsx', '.less', '.ts', '.tsx', '.json'],
     alias: {
+      // 'react-dom': '@hot-loader/react-dom',
       '@': path.join(__dirname, '../src/'),
       Src: resolve('src'),
       Components: resolve('src/components'),
@@ -33,17 +35,17 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.tsx?$/,
-        loader: 'awesome-typescript-loader',
-      },
+      // {
+      //   test: /\.tsx?$/,
+      //   loader: 'awesome-typescript-loader',
+      // },
       // {
       //   enforce: "pre",
       //   test: /\.js$/,
       //   loader: "source-map-loader"
       // },
       {
-        test: /\.(js|.jsx)$/,
+        test: /\.(ts|tsx|js|jsx)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
         include: [resolve('src')],
@@ -53,14 +55,12 @@ module.exports = {
         },
       },
       {
-        test: /\.jsx?$/,
+        test: /\.(ts|tsx|js|jsx)$/,
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true,
+        },
         exclude: /node_modules/,
-        use: [
-          {
-            // loader: "happypack/loader?id=jsx"
-            loader: 'babel-loader',
-          },
-        ],
       },
       {
         test: /\.(le|c)ss$/,
@@ -134,6 +134,7 @@ module.exports = {
     //   loaders: ['babel-loader?cacheDirectory=true'],
     //   threadPool: HappyPackThreadPool,
     // })
+    new HardSourceWebpackPlugin(),
   ],
   externals: {
     $config: '$config',

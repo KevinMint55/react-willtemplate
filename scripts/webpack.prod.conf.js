@@ -1,12 +1,11 @@
 const merge = require('webpack-merge');
 const webpack = require('webpack');
-const path = require('path');
 const {
   CleanWebpackPlugin,
 } = require('clean-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const baseWebpackConfig = require('./webpack.base.conf.js');
-const config = require('../config');
+const config = require('./config');
 
 module.exports = merge(baseWebpackConfig, {
   mode: 'production',

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Test from 'Components/Test';
 
-export default () => {
+const Count = () => {
   const [count, setCount] = useState(0);
 
   const handleClick = () => {
-    setCount(count => count + 1);
+    setCount((preCount) => preCount + 1);
   };
 
   return (
@@ -16,3 +16,5 @@ export default () => {
     </div>
   );
 };
+
+export default Count;
