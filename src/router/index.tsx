@@ -1,5 +1,4 @@
 import React from 'react';
-import { hot } from 'react-hot-loader/root';
 import {
   BrowserRouter,
   Route,
@@ -16,7 +15,7 @@ const PrimaryLayout = () => (
     <div className="primary-layout">
       <header>
         <Link to="/">toHome</Link>&emsp;|&emsp;
-      <Link to="/count">toCount</Link>
+        <Link to="/count">toCount</Link>
       </header>
       <main>
         <Switch>
@@ -28,4 +27,4 @@ const PrimaryLayout = () => (
   </BrowserRouter>
 );
 
-export default hot(PrimaryLayout);
+export default PrimaryLayout;

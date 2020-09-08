@@ -6,7 +6,11 @@ module.exports = {
     browser: true,
     node: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb-base'],
+  extends: [
+    'airbnb-base',
+    'plugin:react/recommended',
+    // 'plugin:@typescript-eslint/recommended',
+  ],
   settings: {
     'import/resolver': {
       node: {
@@ -17,33 +21,20 @@ module.exports = {
         config: path.resolve(__dirname, './scripts//webpack.base.conf.js'),
       },
     },
-    react: {
-      'createClass': 'createReactClass',
-      'pragma': 'React',
-      'version': 'detect',
-      'flowVersion': '0.53'
-    },
-    propWrapperFunctions: [
-        'forbidExtraProps',
-      {
-        'property': 'freeze',
-        'object': 'Object'
-      },
-      {
-        'property': 'myFavoriteWrapper'
-      }
-    ],
-    linkComponents: [
-      'Hyperlink',
-      {
-        'name': 'Link',
-        'linkAttribute': 'to'
-      }
-    ],
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    // 'import/extensions': [
+    //   ERROR,
+    //   'ignorePackages',
+    //   {
+    //     ts: 'never',
+    //     tsx: 'never',
+    //     json: 'never',
+    //     js: 'never',
+    //   },
+    // ],
     'linebreak-style': 'off',
     'no-mixed-operators': 'off',
     'max-len': [1, 200],
@@ -60,5 +51,14 @@ module.exports = {
     'no-restricted-globals': ['error', 'event'],
     'no-restricted-syntax': 'off',
   },
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  // parser: '@typescript-eslint/parser',
+  // parserOptions: {
+  //   ecmaFeatures: {
+  //     jsx: true,
+  //   },
+  //   ecmaVersion: 11,
+  //   sourceType: 'module',
+  // },
+  // plugins: ['react', '@typescript-eslint'],
 };

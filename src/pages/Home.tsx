@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 const Home = () => {
-  const [name] = useState<String>('ddd');
+  const [name] = useState<string>('ddd');
 
   return (
     <div className="home">
