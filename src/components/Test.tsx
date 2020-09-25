@@ -7,7 +7,8 @@ interface IProps {
 const Test = (props: IProps) => (
   <div>
     <h1>哈哈哈</h1>
-    当前count值：{props.count}<br />
+    当前count值：{props.count}
+    <br />
   </div>
 );
 
