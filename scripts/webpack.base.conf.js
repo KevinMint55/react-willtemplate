@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -8,6 +9,9 @@ const isProduction = process.env.NODE_ENV === 'production';
 // const HappyPackThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
@@ -15,21 +19,33 @@ function resolve(dir) {
 
 module.exports = {
   entry: {
-    app: './src/index.js',
+    app: ['./src/index.tsx'],
   },
   resolve: {
     modules: [
       'node_modules',
     ],
-    extensions: ['.js', '.jsx', '.less', '.ts', 'tsx', '.json'],
+    extensions: ['.js', '.jsx', '.less', '.ts', '.tsx', '.json'],
     alias: {
-      '@': path.join(__dirname, '../src/'),
+      // 'react-dom': '@hot-loader/react-dom',
+      Src: resolve('src'),
+      Components: resolve('src/components'),
+      Utils: resolve('src/utils'),
     },
   },
   module: {
     rules: [
+      // {
+      //   test: /\.tsx?$/,
+      //   loader: 'awesome-typescript-loader',
+      // },
+      // {
+      //   enforce: "pre",
+      //   test: /\.js$/,
+      //   loader: "source-map-loader"
+      // },
       {
-        test: /\.(js|.jsx)$/,
+        test: /\.(ts|tsx|js|jsx)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
         include: [resolve('src')],
@@ -39,14 +55,12 @@ module.exports = {
         },
       },
       {
-        test: /\.jsx?$/,
+        test: /\.(ts|tsx|js|jsx)$/,
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true,
+        },
         exclude: /node_modules/,
-        use: [
-          {
-            // loader: "happypack/loader?id=jsx"
-            loader: 'babel-loader',
-          },
-        ],
       },
       {
         test: /\.(le|c)ss$/,
@@ -90,14 +104,14 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.join(__dirname, '../src/index.html'),
+      template: resolve('src/index.html'),
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[chunkhash].css',
       chunkFilename: 'css/[id].[chunkhash].css',
     }),
     new CopyWebpackPlugin([{
-      from: path.join(__dirname, '../src/config/index.js'),
+      from: resolve('src/config/index.js'),
       to: './apiConfig.js',
     }]),
     new HtmlWebpackTagsPlugin({
@@ -106,6 +120,13 @@ module.exports = {
       }],
       append: false,
     }),
+    // 使用dll文件
+    new AddAssetHtmlWebpackPlugin({
+      filepath: resolve('dll/vendor.dll.js'), // 对应的 dll 文件路径
+    }),
+    new webpack.DllReferencePlugin({
+      manifest: resolve('dll/vendor-manifest.json'),
+    }),
     // new HappyPack({
     //   // 用唯一的标识符id，来代表当前的HappyPack是用来处理一类特定的文件
     //   id:'jsx',
@@ -113,8 +134,16 @@ module.exports = {
     //   loaders: ['babel-loader?cacheDirectory=true'],
     //   threadPool: HappyPackThreadPool,
     // })
+    new HardSourceWebpackPlugin(),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: resolve('tsconfig.json'),
+      },
+    }),
   ],
   externals: {
     $config: '$config',
+    // "react": "React",
+    // "react-dom": "ReactDOM",
   },
 };

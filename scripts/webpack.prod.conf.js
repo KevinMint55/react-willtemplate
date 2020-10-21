@@ -1,13 +1,11 @@
 const merge = require('webpack-merge');
 const webpack = require('webpack');
-const path = require('path');
 const {
   CleanWebpackPlugin,
 } = require('clean-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
 const baseWebpackConfig = require('./webpack.base.conf.js');
-const config = require('../config');
+const config = require('./config');
 
 module.exports = merge(baseWebpackConfig, {
   mode: 'production',
@@ -23,13 +21,6 @@ module.exports = merge(baseWebpackConfig, {
     new OptimizeCSSAssetsPlugin({}),
     // keep module.id stable when vendor modules does not change
     new webpack.HashedModuleIdsPlugin(),
-    // 使用dll文件
-    new AddAssetHtmlWebpackPlugin({
-      filepath: path.resolve(__dirname, '../dll/vendor.dll.js'), // 对应的 dll 文件路径
-    }),
-    new webpack.DllReferencePlugin({
-      manifest: path.resolve(__dirname, '..', 'dll/vendor-manifest.json'),
-    }),
   ],
   optimization: {
     splitChunks: {

@@ -4,40 +4,34 @@ module.exports = {
   root: true,
   env: {
     browser: true,
+    es2020: true,
     node: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb-base'],
+  extends: ['airbnb', 'airbnb/hooks', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended'],
   settings: {
     'import/resolver': {
+      node: {
+        extensions: ['.tsx', '.ts', '.js', '.json'],
+      },
+      typescript: {},
       webpack: {
         config: path.resolve(__dirname, './scripts//webpack.base.conf.js'),
       },
     },
-    react: {
-      'createClass': 'createReactClass',
-      'pragma': 'React',
-      'version': 'detect',
-      'flowVersion': '0.53'
-    },
-    propWrapperFunctions: [
-        'forbidExtraProps',
-      {
-        'property': 'freeze',
-        'object': 'Object'
-      },
-      {
-        'property': 'myFavoriteWrapper'
-      }
-    ],
-    linkComponents: [
-      'Hyperlink',
-      {
-        'name': 'Link',
-        'linkAttribute': 'to'
-      }
-    ],
   },
   rules: {
+    'import/extensions': [
+      2,
+      'ignorePackages',
+      {
+        ts: 'never',
+        tsx: 'never',
+        json: 'never',
+        js: 'never',
+      },
+    ],
+    'import/prefer-default-export': 0,
+
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'linebreak-style': 'off',
@@ -55,6 +49,23 @@ module.exports = {
     'guard-for-in': 'off',
     'no-restricted-globals': ['error', 'event'],
     'no-restricted-syntax': 'off',
+    'no-use-before-define': [0],
+
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-use-before-define': 'off',
+
+    'react/jsx-filename-extension': 0,
+    'react/jsx-one-expression-per-line': 0,
+    'react/destructuring-assignment': 0,
   },
-  "parser": "babel-eslint"
+  // parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 11,
+    sourceType: 'module',
+  },
+  plugins: ['react', '@typescript-eslint'],
 };
