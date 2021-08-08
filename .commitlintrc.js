@@ -14,6 +14,14 @@
  * opt : 优化
  */
 
+// package.json
+//  "husky": {
+//   "hooks": {
+//     "pre-commit": "lint-staged",
+//     "commit-msg": "commitlint --config .commitlintrc.js -E HUSKY_GIT_PARAMS"
+//   }
+// },
+
 module.exports = {
   extends: ['@commitlint/config-conventional'],
   rules: {
@@ -23,4 +31,4 @@ module.exports = {
       ['build', 'ci', 'chore', 'docs', 'feat', 'fix', 'perf', 'refactor', 'revert', 'style', 'test', 'anno', 'opt'],
     ],
   },
-}
+};
