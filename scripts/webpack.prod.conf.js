@@ -1,4 +1,4 @@
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const webpack = require('webpack');
 const {
   CleanWebpackPlugin,
@@ -20,7 +20,7 @@ module.exports = merge(baseWebpackConfig, {
     // 压缩css
     new OptimizeCSSAssetsPlugin({}),
     // keep module.id stable when vendor modules does not change
-    new webpack.HashedModuleIdsPlugin(),
+    new webpack.ids.HashedModuleIdsPlugin(),
   ],
   optimization: {
     splitChunks: {

@@ -19,7 +19,7 @@ const options = {
   quiet: true,
   host: '0.0.0.0',
   watchOptions: {
-    ignored: [/node_modules/],
+    ignored: ['/node_modules/'],
     poll: true,
   },
 };

@@ -10,7 +10,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 function resolve(dir) {
@@ -110,10 +110,12 @@ module.exports = {
       filename: 'css/[name].[chunkhash].css',
       chunkFilename: 'css/[id].[chunkhash].css',
     }),
-    new CopyWebpackPlugin([{
-      from: resolve('src/config/index.js'),
-      to: './apiConfig.js',
-    }]),
+    new CopyWebpackPlugin({
+      patterns: [{
+        from: resolve('src/config/index.js'),
+        to: './apiConfig.js',
+      }],
+    }),
     new HtmlWebpackTagsPlugin({
       tags: [{
         path: 'apiConfig.js',
@@ -134,7 +136,7 @@ module.exports = {
     //   loaders: ['babel-loader?cacheDirectory=true'],
     //   threadPool: HappyPackThreadPool,
     // })
-    new HardSourceWebpackPlugin(),
+    // new HardSourceWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin({
       typescript: {
         configFile: resolve('tsconfig.json'),
