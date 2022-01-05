@@ -1,7 +1,7 @@
 {
-  "name": "{{name}}",
+  "name": "react-willtemplate",
   "version": "1.0.0",
-  "description": "{{description}}",
+  "description": "react-willtemplate",
   "license": "MIT",
   "scripts": {
     "start": "node scripts/devServer.js",
